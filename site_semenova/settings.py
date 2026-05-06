@@ -125,6 +125,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',   # ваше приложение
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Перенаправление после входа (для админки и вообще)
