@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% block title %}{{ buyer.full_name }}{% endblock %}
+{% block content %}
+<h1>{{ buyer.full_name }}</h1>
+<p><strong>Email:</strong> {{ buyer.email }}</p>
+<p><strong>Телефон:</strong> {{ buyer.phone }}</p>
+<p><strong>Адрес:</strong> {{ buyer.address }}</p>
+<p><strong>Бонусы:</strong> {{ buyer.bonuses }}</p>
+<h3>Заказы покупателя</h3>
+<ul>
+    {% for order in buyer.orders.all %}
+        <li><a href="{% url 'app:order_detail' order.pk %}">Заказ #{{ order.id }} от {{ order.date_of_creation }}</a></li>
+    {% empty %}
+        <li>Нет заказов.</li>
+    {% endfor %}
+</ul>
+<div class="actions">
+    {% if user.is_staff %}
+        <a href="{% url 'app:buyer_update' buyer.pk %}" class="btn btn-edit">✏️ Редактировать</a>
+    {% endif %}
+    <a href="{% url 'app:buyer_list' %}" class="btn">← Назад</a>
+</div>
+{% endblock %}

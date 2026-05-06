@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% block title %}{% if form.instance.pk %}Редактирование покупателя{% else %}Новый покупатель{% endif %}{% endblock %}
+{% block content %}
+<div class="form-container">
+    <h1>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} покупателя</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="{% url 'app:buyer_list' %}" class="btn">Отмена</a>
+    </form>
+</div>
+{% endblock %}

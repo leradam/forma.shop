@@ -1,0 +1,21 @@
+{% extends 'app/base.html' %}
+{% block title %}{{ product }}{% endblock %}
+{% block content %}
+<div class="detail-container">
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.category.title }}" class="detail-image">
+    {% endif %}
+    <h1>{{ product.category.title }} (размер {{ product.size }})</h1>
+    <p><strong>Описание:</strong> {{ product.description }}</p>
+    <p><strong>Цена:</strong> <span class="price">{{ product.price }} ₽</span></p>
+    <p><strong>На складе:</strong> {{ product.availability }}</p>
+    <p><strong>Категория:</strong> <a href="{% url 'app:productcategory_detail' product.category.pk %}">{{ product.category.title }}</a></p>
+    <div class="actions">
+        <a href="{% url 'app:cart_add' product.pk %}" class="btn btn-primary">В корзину</a>
+        {% if user.is_staff %}
+            <a href="{% url 'app:product_update' product.pk %}" class="btn btn-edit">✏️ Редактировать</a>
+        {% endif %}
+        <a href="{% url 'app:product_list' %}" class="btn">← Назад к списку</a>
+    </div>
+</div>
+{% endblock %}

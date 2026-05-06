@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% block title %}Оформление заказа{% endblock %}
+{% block content %}
+<h1>Оформление заказа</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>Способ оплаты:</label>
+    <select name="payment" required>
+        <option value="Наличными при получении">Наличными при получении</option>
+        <option value="Картой онлайн">Картой онлайн</option>
+        <option value="Переводом на карту">Переводом на карту</option>
+    </select>
+    <label>Способ доставки:</label>
+    <select name="delivery_option" required>
+        <option value="Курьером">Курьером</option>
+        <option value="Самовывоз">Самовывоз</option>
+        <option value="Почта России">Почта России</option>
+    </select>
+    <label>Комментарий к заказу:</label>
+    <textarea name="comment" rows="3"></textarea>
+    <button type="submit" class="btn btn-primary">Подтвердить заказ</button>
+</form>
+{% endblock %}

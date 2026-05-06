@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Forma{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'app:home' %}">Главная</a></li>
+                <li><a href="{% url 'app:product_list' %}">Товары</a></li>
+                <li><a href="{% url 'app:productcategory_list' %}">Категории</a></li>
+                {% if user.is_staff %}
+                    <li><a href="{% url 'app:buyer_list' %}">Покупатели</a></li>
+                    <li><a href="{% url 'app:order_list' %}">Заказы</a></li>
+                {% endif %}
+                <li><a href="{% url 'app:review_list' %}">Отзывы</a></li>
+                <li><a href="{% url 'app:cart_detail' %}">Корзина 🛒</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'app:my_orders' %}">Мои заказы</a></li>
+                    <li><a href="{% url 'app:logout' %}">Выйти ({{ user.username }})</a></li>
+                {% else %}
+                    <li><a href="{% url 'app:login' %}">Вход</a></li>
+                    <li><a href="{% url 'app:register' %}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2026 Forma – осознанный гардероб</p>
+    </footer>
+</body>
+</html>

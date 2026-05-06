@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% block title %}Заказ #{{ order.id }}{% endblock %}
+{% block content %}
+<h1>Заказ #{{ order.id }}</h1>
+<p><strong>Покупатель:</strong> <a href="{% url 'app:buyer_detail' order.buyer.pk %}">{{ order.buyer.full_name }}</a></p>
+<p><strong>Дата создания:</strong> {{ order.date_of_creation }}</p>
+<p><strong>Оплата:</strong> {{ order.payment }}</p>
+<p><strong>Доставка:</strong> {{ order.delivery_option }}</p>
+<p><strong>Статус:</strong> {{ order.registration_status }}</p>
+<p><strong>Комментарий:</strong> {{ order.comment|default:"—" }}</p>
+<h3>Товары в заказе:</h3>
+<ul>
+    {% for product in order.products.all %}
+        <li><a href="{% url 'app:product_detail' product.pk %}">{{ product.category.title }} (размер {{ product.size }})</a> — {{ product.price }} ₽</li>
+    {% empty %}
+        <li>Нет товаров.</li>
+    {% endfor %}
+</ul>
+<div class="actions">
+    <a href="{% url 'app:order_update' order.pk %}" class="btn btn-edit">✏️ Редактировать</a>
+    <a href="{% url 'app:order_list' %}" class="btn">← Назад</a>
+</div>
+{% endblock %}

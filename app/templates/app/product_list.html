@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+{% block title %}Товары{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Товары</h1>
+    {% if user.is_staff %}
+        <a href="{% url 'app:product_create' %}" class="btn btn-primary">➕ Добавить товар</a>
+    {% endif %}
+</div>
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.category.title }}" class="product-image">
+        {% else %}
+            <div class="no-image">Нет изображения</div>
+        {% endif %}
+        <h3>{{ product.category.title }} (размер {{ product.size }})</h3>
+        <p class="price">{{ product.price }} ₽</p>
+        <p class="stock">В наличии: {{ product.availability }}</p>
+        <div class="card-actions">
+            <a href="{% url 'app:product_detail' product.pk %}" class="btn">Подробнее</a>
+            <a href="{% url 'app:cart_add' product.pk %}" class="btn btn-primary">В корзину</a>
+            {% if user.is_staff %}
+                <a href="{% url 'app:product_update' product.pk %}" class="btn btn-edit">✏️</a>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p class="empty">Товаров пока нет. Добавьте первый!</p>
+    {% endfor %}
+</div>
+{% endblock %}

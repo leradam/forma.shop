@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+{% block title %}Отзыв на {{ review.product }}{% endblock %}
+{% block content %}
+<h1>Отзыв</h1>
+<p><strong>Товар:</strong> <a href="{% url 'app:product_detail' review.product.pk %}">{{ review.product }}</a></p>
+<p><strong>Покупатель:</strong> <a href="{% url 'app:buyer_detail' review.buyer.pk %}">{{ review.buyer.full_name }}</a></p>
+<p><strong>Рейтинг:</strong> {{ review.rating }} / 5</p>
+<p><strong>Текст:</strong> {{ review.review_text }}</p>
+<p><strong>Дата публикации:</strong> {{ review.date_of_publication }}</p>
+<p><strong>Статус:</strong> {{ review.status }}</p>
+<div class="actions">
+    <a href="{% url 'app:review_update' review.pk %}" class="btn btn-edit">✏️ Редактировать</a>
+    <a href="{% url 'app:review_list' %}" class="btn">← Назад</a>
+</div>
+{% endblock %}

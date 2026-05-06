@@ -1,0 +1,14 @@
+{% extends 'app/base.html' %}
+{% block title %}{% if form.instance.pk %}Редактирование товара{% else %}Новый товар{% endif %}{% endblock %}
+{% block content %}
+<div class="form-container">
+    <h1>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} товар</h1>
+    <!-- Добавляем enctype="multipart/form-data" -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="{% url 'app:product_list' %}" class="btn">Отмена</a>
+    </form>
+</div>
+{% endblock %}

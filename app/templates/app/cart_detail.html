@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+{% block title %}Корзина{% endblock %}
+{% block content %}
+<h1>Корзина</h1>
+{% if cart_items %}
+    <table>
+        <thead>
+            <tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
+        </thead>
+        <tbody>
+        {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.category.title }} (разм.{{ item.product.size }})</td>
+                <td>{{ item.product.price }} ₽</td>
+                <td>
+                    <input type="number" value="{{ item.quantity }}" min="1" style="width:60px" data-id="{{ item.product.id }}" class="qty-input">
+                </td>
+                <td>{{ item.subtotal }} ₽</td>
+                <td><a href="{% url 'app:cart_remove' item.product.id %}">Удалить</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr><td colspan="3"><strong>Итого</strong></td><td>{{ total }} ₽</td><td></td></tr>
+        </tfoot>
+    </table>
+    <div class="cart-actions">
+        <a href="{% url 'app:checkout' %}" class="btn btn-primary">Оформить заказ</a>
+        <a href="{% url 'app:product_list' %}" class="btn">Продолжить покупки</a>
+    </div>
+{% else %}
+    <p>Корзина пуста. <a href="{% url 'app:product_list' %}">Перейти к товарам</a></p>
+{% endif %}
+
+<script>
+    // Небольшой JS для обновления количества
+    document.querySelectorAll('.qty-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const productId = this.dataset.id;
+            const quantity = this.value;
+            window.location.href = `/cart/update/${productId}/${quantity}/`;
+        });
+    });
+</script>
+{% endblock %}
